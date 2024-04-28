@@ -3,6 +3,7 @@ import { useMutation } from "convex/react";
 import { Ban, LogOut } from "lucide-react";
 import toast from "react-hot-toast";
 import { api } from "../../../convex/_generated/api";
+import React from "react";
 
 type ChatAvatarActionsProps ={
     message: IMessage,
@@ -15,7 +16,8 @@ const ChatAvatarActions = ({message, me}: ChatAvatarActionsProps) => {
     const kickUser = useMutation(api.conversations.kickUser)
     const createConversation = useMutation(api.conversations.createConversation)
 
-    const handleKickUser = async () => {
+    const handleKickUser = async (e:React.MouseEvent) => {
+      e.stopPropagation()
       if(!selectedConversation) return;
       try {
         await kickUser({

@@ -26,6 +26,8 @@ const MessageInput = () => {
 		} catch (err:any) {
 			toast.error(err.message)
 			console.error(err)
+		} finally {
+			setMsgText("")
 		}
 	}
 

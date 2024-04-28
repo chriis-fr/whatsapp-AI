@@ -6,6 +6,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription } from "../ui/dialog";
 import ReactPlayer from "react-player";
+import ChatAvatarActions from "./chat-avatar-actions";
+import { Bot } from "lucide-react";
 
 type ChatBubbleProps = {
 	message: IMessage;
@@ -20,12 +22,14 @@ const ChatBubble = ({me, message, previousMessage}:ChatBubbleProps) => {
 	const hour = date.getHours().toString().padStart(2, "0");
 	const minute = date.getMinutes().toString().padStart(2, "0")
 	const time = `${hour}:${minute}`;
+	const fromAI = message.sender?.name === "ChatGPT"
 
 	const {selectedConversation} = useConversationStore();
-	const isMember = selectedConversation?.participants.includes(message.sender._id) || false;
+	const isMember = selectedConversation?.participants.includes(message.sender?._id) || false;
 	const isGroup = selectedConversation?.isGroup
-	const fromMe = message.sender._id === me._id;
-	const bgClass = fromMe ? "bg-green-chat" : "bg-white dark:bg-ray-primary"
+	const fromMe = message.sender?._id === me._id;
+	const bgClass = fromMe ? "bg-green-chat" : !fromAI ? "bg-white dark:bg-gray-primary" : "bg-violet-600 text-white"
+	
 
 	const [open, setOpen] = useState(false)
 
@@ -37,8 +41,12 @@ const ChatBubble = ({me, message, previousMessage}:ChatBubbleProps) => {
 			<div className="flex gap-1 w-2/3">
 				<ChatBubbleAvatar isGroup={isGroup} isMember={isMember} message={message} />
 				<div className={`flex flex-col z-20 max-w.fit px-2 pt-1 rounded-md shadow-md relative ${bgClass}`}>
-					<OtherMessageIndicator />
-					{isGroup && <ChatAvatarActions />}
+					{!fromAI && <OtherMessageIndicator />}
+					{fromAI && <Bot size={16} className="absolute bottom-[2px] left-2" />}
+					{isGroup && <ChatAvatarActions 
+					message={message}
+					me={me}
+					/>}
 					{message.messageType === "text" && <TextMessage message={message} />}
 					{message.messageType === "image" && <ImageMessage message={message}
 					handleClick={() => setOpen(true)} />}
