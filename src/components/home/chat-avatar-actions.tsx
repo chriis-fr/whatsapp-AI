@@ -15,8 +15,11 @@ const ChatAvatarActions = ({message, me}: ChatAvatarActionsProps) => {
 
     const kickUser = useMutation(api.conversations.kickUser)
     const createConversation = useMutation(api.conversations.createConversation)
+    const fromAI = message.sender?.name === "ChatGPT";
+    const isGroup = selectedConversation?.isGroup;
 
     const handleKickUser = async (e:React.MouseEvent) => {
+      if(fromAI) return null;
       e.stopPropagation()
       if(!selectedConversation) return;
       try {
@@ -36,6 +39,7 @@ const ChatAvatarActions = ({message, me}: ChatAvatarActionsProps) => {
     }
 
     const handleCreateConversation = async () => {
+      if(fromAI) return null;
       try {
         const conversationId = await createConversation({
           isGroup:false,
@@ -59,9 +63,9 @@ const ChatAvatarActions = ({message, me}: ChatAvatarActionsProps) => {
     <div className="flex text-[11px] gap-4 justify-between font-bold cursor-pointer group"
      onClick={handleCreateConversation}
      >
-        {message.sender.name}
-        {!isMember && <Ban size={16} className="text-red-500" />}
-        {isMember && selectedConversation?.admin === me._id && (
+        {isGroup && message.sender.name}
+        {!isMember && !fromAI && isGroup && <Ban size={16} className="text-red-500" />}
+        {isGroup && isMember && selectedConversation?.admin === me._id && (
           <LogOut size={16} className="text-red-500 opacity-0 group-hover:opacity-100" 
           onClick={handleKickUser}
           />
