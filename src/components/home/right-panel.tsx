@@ -8,6 +8,7 @@ import GroupMembersDialog from "./group-members-dialog";
 import { useConversationStore } from "@/store/chat-store";
 import { useConvexAuth } from "convex/react";
 
+
 const RightPanel = () => {
 	const {isLoading} = useConvexAuth();
 	const {selectedConversation, setSelectedConversation} = useConversationStore()
@@ -20,7 +21,7 @@ const RightPanel = () => {
 	const conversationImage = selectedConversation.groupImage || selectedConversation.image;
 
 	return (
-		<div className='w-3/4 flex flex-col'>
+		<div className='w-full md:w-3/4 flex flex-col right-panel'>
 			<div className='w-full sticky top-0 z-50'>
 				{/* Header */}
 				<div className='flex justify-between bg-gray-primary p-3'>

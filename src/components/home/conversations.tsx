@@ -20,7 +20,7 @@ const Conversation = ({ conversation }: { conversation: any }) => {
 
 	return (
 		<>
-			<div className={`flex gap-2 items-center p-3 hover:bg-chat-hover cursor-pointer 
+			<div className={`flex gap-2 items-center p-3 overflow-x-auto hover:bg-chat-hover cursor-pointer 
 			${activeBgClass ? "bg-gray-tertiary" : ""}
 			`}
 			onClick={() => {setSelectedConversation(conversation)}}
@@ -35,7 +35,7 @@ const Conversation = ({ conversation }: { conversation: any }) => {
 					</AvatarFallback>
 				</Avatar>
 				<div className='w-full'>
-					<div className='flex items-center'>
+					<div className='flex items-center '>
 						<h3 className='text-xs lg:text-sm font-medium'>{conversationName}</h3>
 						<span className='text-[10px] lg:text-xs text-gray-500 ml-auto'>
 							{formatDate(lastMessage?._creationTime || conversation._creationTime)}

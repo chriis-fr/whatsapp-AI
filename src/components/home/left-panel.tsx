@@ -29,7 +29,7 @@ const LeftPanel = () => {
 	if(isLoading) return null;
 
 	return (
-		<div className='w-1/4 border-gray-600 border-r'>
+		<div className='w-full md:w-1/4 border-gray-600 border-r'>
 			<div className='sticky top-0 bg-left-panel z-10'>
 				{/* Header */}
 				<div className='flex justify-between bg-gray-primary p-3 items-center'>
@@ -58,7 +58,8 @@ const LeftPanel = () => {
 			</div>
 
 			{/* Chat List */}
-			<div className='my-3 flex flex-col gap-0 max-h-[80%] overflow-auto'>
+			<div className=" max-h-[80vh] overflow-y-auto">
+			<div className='my-3 flex flex-col gap-0 max-h-[100%] '>
 				{/* Conversations will go here*/}
 
                 {conversations?.map((conversation) => (
@@ -74,6 +75,7 @@ const LeftPanel = () => {
 						</p>
 					</>
 				)}
+			</div>
 			</div>
 		</div>
 	);

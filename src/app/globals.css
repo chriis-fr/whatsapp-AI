@@ -118,3 +118,8 @@
 		background-color: hsl(var(--container));
 	}
 }
+@media only screen and (max-width: 768px) {
+	.right-panel {
+	  display: none;
+	}
+  }
